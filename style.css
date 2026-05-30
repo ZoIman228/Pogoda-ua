@@ -1,28 +1,92 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-#text1{
-  font-size: 30px;
-  font-family: 'Arial', sans-serif;
-  color: #333;
-  text-align: center;
-  margin-top: 20px;
+
+html, body {
+  height: 100%;
 }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url("images/images (4).jpg") center/cover fixed no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 640px;
+  background: rgba(255,255,255,0.88);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+
+#text1{
+  font-size: 28px;
+  color: #1a1a1a;
+  margin-bottom: 18px;
+}
+
 #city-input {
   display: block;
-  margin: 20px auto;
-  padding: 10px;
+  margin: 0 auto;
+  padding: 12px 14px;
   font-size: 16px;
-  width: 200px;
+  width: 100%;
+  max-width: 380px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 8px;
+  outline: none;
+  transition: box-shadow 160ms ease, transform 160ms ease;
 }
+
+#city-input:focus{
+  box-shadow: 0 6px 18px rgba(0,123,255,0.12);
+  transform: translateY(-1px);
+}
+
 #search-btn {
-  display: block;
-  margin: 10px auto;
-  padding: 10px 20px;
+  display: inline-block;
+  margin: 14px 0 0 0;
+  padding: 10px 22px;
   font-size: 16px;
   background-color: #007BFF;
   color: white;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,123,255,0.18);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+#search-btn:hover{
+  transform: translateY(-2px);
+}
+
+#weather-result{
+  margin: 18px auto 0 auto;
+  width: 100%;
+  max-width: 520px;
+  min-height: 68px;
+  background: rgba(255,255,255,0.96);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  text-align: left;
+}
+
+@media (max-width: 480px){
+  .container{ padding: 18px; }
+  #text1{ font-size: 22px; }
+  #city-input{ max-width: 100%; }
+  #weather-result{ padding: 12px; }
 }
