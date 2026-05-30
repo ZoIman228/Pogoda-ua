@@ -7,8 +7,7 @@ const result = document.getElementById("weather-result");
 async function fetchWeather(q) {
   result.innerHTML = "<p>Завантаження...</p>";
   try {
-    const days = 10; 
-    const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${encodeURIComponent(q)}&days=${days}&aqi=no&alerts=no`;
+    const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${encodeURIComponent(q)}&days=10&aqi=no&alerts=no`;
     const resp = await fetch(url);
     if (!resp.ok) throw new Error("HTTP error " + resp.status);
     const data = await resp.json();
@@ -20,9 +19,11 @@ async function fetchWeather(q) {
 }
 
 function renderWeather(data) {
-  const icon = data.current.condition.icon.startsWith("//")
-    ? "https:" + data.current.condition.icon
-    : data.current.condition.icon;
+  const icon = data.current.condition.icon
+    ? data.current.condition.icon.startsWith("//")
+      ? "https:" + data.current.condition.icon
+      : data.current.condition.icon
+    : "";
 
   let html = `
     <div class="weather-card">
@@ -42,24 +43,29 @@ function renderWeather(data) {
   `;
 
   if (data.forecast && Array.isArray(data.forecast.forecastday)) {
-    html += '<div class="forecast-grid">';
+    html += `<div class="forecast-grid">`;
     data.forecast.forecastday.forEach((day) => {
-      const dIcon = day.day.condition.icon.startsWith("//")
-        ? "https:" + day.day.condition.icon
-        : day.day.condition.icon;
-      const chance =
-        day.day.daily_chance_of_rain ?? day.day.daily_chance_of_rain ?? 0;
+      const dIcon = day.day.condition.icon
+        ? day.day.condition.icon.startsWith("//")
+          ? "https:" + day.day.condition.icon
+          : day.day.condition.icon
+        : "";
+      const dateStr = new Date(day.date).toLocaleDateString("uk-UA", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+      });
       html += `
         <div class="forecast-item">
-          <div class="date">${day.date}</div>
-          <img src="${dIcon}" alt="${day.day.condition.text}" width="54" height="54" />
-          <div class="cond">${day.day.condition.text}</div>
-          <div class="temps">Max ${day.day.maxtemp_c}° · Min ${day.day.mintemp_c}°</div>
-          <div class="meta">Осадки: ${chance}% · Вологість: ${day.day.avghumidity}%</div>
+          <div class="date">${dateStr}</div>
+          <img src="${dIcon}" alt="${day.day.condition.text}" width="48" height="48" />
+          <div class="meta">${day.day.condition.text}</div>
+          <div class="temps">${day.day.maxtemp_c}° / ${day.day.mintemp_c}°C</div>
+          <div class="meta">Осадок: ${day.day.totalprecip_mm} мм · Вологість: ${day.day.avghumidity}%</div>
         </div>
       `;
     });
-    html += "</div>";
+    html += `</div>`;
   }
 
   result.innerHTML = html;
