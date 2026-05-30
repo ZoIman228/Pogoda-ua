@@ -2,3 +2,27 @@
   margin: 0;
   padding: 0;
 }
+#text1{
+  font-size: 30px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+#city-input {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
+}
+#search-btn {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

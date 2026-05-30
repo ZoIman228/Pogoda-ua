@@ -13,7 +13,7 @@
 Запит поточної погоди у локації
 
 Приклад URL з поясненням:
-http://api.weatherapi.com/v1/current.json?key=API_KEY&q=LOCATION&aqi=no
+http://api.weatherapi.com/v1/current.json?key=f0d6a0da789f48808a6123315263005&q=Uman&aqi=no
 
 Де API_KEY - це ваш ключ, який ви отримуєте після реєстрації
 LOCATION - це місто, про яке ви хочете отримати інформацію
