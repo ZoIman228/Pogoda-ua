@@ -25,7 +25,6 @@ body {
     url("images/images (4).png") center/cover fixed no-repeat;
 }
 
-/* Background wrapper and layers for smooth crossfade */
 #bg-wrapper {
   position: fixed;
   inset: 0;
