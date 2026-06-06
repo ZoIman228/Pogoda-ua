@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,6 +10,10 @@
     <title>Document</title>
   </head>
   <body>
+    <div id="bg-wrapper">
+      <div id="bg-a" class="bg-layer active"></div>
+      <div id="bg-b" class="bg-layer"></div>
+    </div>
     <div class="container">
       <h1 id="text1">Прогноз погоди</h1>
       <input type="text" id="city-input" placeholder="Введіть назву міста" />
@@ -17,9 +21,11 @@
       <div id="weather-result"></div>
     </div>
 
-    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+    <script
+      src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
       integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <script src="script.js"></script>
   </body>
 </html>

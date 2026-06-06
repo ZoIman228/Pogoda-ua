@@ -25,6 +25,32 @@ body {
     url("images/images (4).png") center/cover fixed no-repeat;
 }
 
+/* Background wrapper and layers for smooth crossfade */
+#bg-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0;
+  transition: opacity 900ms ease-in-out;
+}
+.bg-layer.active {
+  opacity: 1;
+}
+
+.container {
+  z-index: 2;
+  position: relative;
+}
+
 .container {
   width: 100%;
   max-width: 640px;

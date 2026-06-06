@@ -4,6 +4,35 @@ const input = document.getElementById("city-input");
 const searchBtn = document.getElementById("search-btn");
 const result = document.getElementById("weather-result");
 
+// Background layer elements for smooth transitions
+const bgA = document.getElementById("bg-a");
+const bgB = document.getElementById("bg-b");
+let activeBg = bgA;
+
+function crossfadeTo(url) {
+  const incoming = activeBg === bgA ? bgB : bgA;
+  incoming.style.backgroundImage = `url("${url}")`;
+  // ensure image applied before switching classes
+  requestAnimationFrame(() => {
+    incoming.classList.add("active");
+    activeBg.classList.remove("active");
+    activeBg = incoming;
+  });
+}
+
+function pickBackgroundFromCondition(condText) {
+  const t = (condText || "").toLowerCase();
+  if (/thunder|storm|lightning/.test(t)) return "images/дощ.jpg";
+  if (/rain|drizzle|shower|spray/.test(t)) return "images/дощ.jpg";
+  if (/snow|sleet|blizzard|ice/.test(t)) return "images/сніг.jpg";
+  if (/mist|fog|haze|smoke/.test(t)) return "images/туман.jpg";
+  if (/dust|sand/.test(t)) return "images/засуха.jpg";
+  if (/clear|sunny/.test(t)) return "images/сонячно.jpg";
+  if (/cloud|overcast/.test(t)) return "images/хмарно.jpg";
+  // fallback to default background if nothing matches
+  return "images/images (4).png";
+}
+
 async function fetchWeather(q) {
   result.innerHTML = "<p>Завантаження...</p>";
   try {
@@ -13,6 +42,14 @@ async function fetchWeather(q) {
     const data = await resp.json();
     if (data.error) throw new Error(data.error.message || "API error");
     renderWeather(data);
+    // set dynamic background according to current condition
+    try {
+      const cond = data.current && data.current.condition && data.current.condition.text;
+      const bg = pickBackgroundFromCondition(cond);
+      crossfadeTo(bg);
+    } catch (e) {
+      // ignore background errors
+    }
   } catch (err) {
     result.innerHTML = `<div class="error">Помилка: ${err.message}</div>`;
   }
