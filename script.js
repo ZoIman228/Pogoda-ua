@@ -131,3 +131,34 @@ if (params.get("city")) {
     fetchWeather(initial);
   }
 }
+
+
+const themeToggle = document.getElementById("theme-toggle");
+function updateThemeButton(isDark) {
+  if (!themeToggle) return;
+  themeToggle.textContent = isDark ? "Світла тема" : "Темна тема";
+  themeToggle.setAttribute("aria-pressed", String(!!isDark));
+}
+function applyTheme(name) {
+  if (name === "dark") {
+    document.body.classList.add("theme-dark");
+    updateThemeButton(true);
+  } else {
+    document.body.classList.remove("theme-dark");
+    updateThemeButton(false);
+  }
+}
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("theme-dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    updateThemeButton(isDark);
+  });
+}
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  applyTheme(savedTheme);
+} else {
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(prefersDark ? "dark" : "light");
+}
