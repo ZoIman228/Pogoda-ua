@@ -100,8 +100,25 @@ app.post("/api/login", (req, res) => {
 // Serve static files (the frontend)
 app.use(express.static(path.join(__dirname, ".")));
 
+function startServer(initialPort, maxAttempts = 20) {
+  const port = Number(initialPort) || 0;
+  const server = app.listen(port, () => {
+    const finalPort = server.address().port;
+    console.log(`Server running at http://localhost:${finalPort}`);
+    console.log(`DB file: ${DB_PATH}`);
+  });
+
+  server.on("error", (err) => {
+    if (err && err.code === "EADDRINUSE" && maxAttempts > 0) {
+      const nextPort = (Number(port) || 3000) + 1;
+      console.warn(`Port ${port} in use, trying ${nextPort}...`);
+      setTimeout(() => startServer(nextPort, maxAttempts - 1), 200);
+    } else {
+      console.error("Server error", err);
+      process.exit(1);
+    }
+  });
+}
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`DB file: ${DB_PATH}`);
-});
+startServer(PORT);
